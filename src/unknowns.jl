@@ -1,11 +1,33 @@
-abstract Missing
+import Base: show
 
-type HereSomewhere{T<:Float64} <: Missing
-    
-    val::T
+abstract Missing 
 
-    function HereSomewhere{T<:Float64}(x::T)
-        x == NaN ? new(x) : error("You're not really lost here are you?")
-    end
+type HereSomewhere <: Missing
+    val::Float64
+    HereSomewhere(x) = isnan(x) ? new(x) : error("You're not really lost here are you?")
 end
 
+type Consumed <: Missing
+    val::Float64
+    Consumed(x) = isnan(x) ? new(x) : error("Value was actually generated afterall, your lucky day!")
+end
+
+type Nonsense <: Missing
+    val::Float64
+    Nonsense(x) = isnan(x) ? new(x) : error("This actually does make sense.")
+end
+
+function show(io::IO, h::HereSomewhere)
+    println()
+    println("Exists but is not known")
+end
+
+function show(io::IO, h::Consumed)
+    println()
+    println("Not enough previous data to generate a meaningful value")
+end
+
+function show(io::IO, h::Nonsense)
+    println()
+    println("Doesn't make sense in known universe")
+end
