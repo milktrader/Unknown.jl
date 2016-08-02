@@ -25,6 +25,7 @@ facts("Types correctly constructed" ) do
     here     = HereSomewhere(NaN)
     consumed = Consumed(NaN)
     nonsense = Nonsense(NaN)
+    shifted  = Shifted(NaN)
 
     context("HereSomewhere") do
         @fact isnan(here.val) --> true 
@@ -39,5 +40,10 @@ facts("Types correctly constructed" ) do
     context("Nonsense") do
         @fact isnan(nonsense.val) --> true 
         @fact_throws Nonsense(1.0)
+    end
+
+    context("Shifted") do
+        @fact isnan(shifted.val) --> true 
+        @fact_throws Shifted(1.0)
     end
 end

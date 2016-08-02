@@ -17,17 +17,27 @@ type Nonsense <: Missing
     Nonsense(x) = isnan(x) ? new(x) : error("This actually does make sense.")
 end
 
-function show(io::IO, h::HereSomewhere)
+type Shifted <: Missing
+    val::Float64
+    Shifted(x) = isnan(x) ? new(x) : error("No shift has occurred.")
+end
+
+function show(io::IO, u::HereSomewhere)
     println()
     println("Exists but is not known")
 end
 
-function show(io::IO, h::Consumed)
+function show(io::IO, u::Consumed)
     println()
     println("Not enough previous data to generate a meaningful value")
 end
 
-function show(io::IO, h::Nonsense)
+function show(io::IO, u::Nonsense)
+    println()
+    println("Doesn't make sense in known universe")
+end
+
+function show(io::IO, u::Shifted)
     println()
     println("Doesn't make sense in known universe")
 end
